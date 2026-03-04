@@ -4,28 +4,41 @@ package edu.uoc.ds.adt;
 import edu.uoc.ds.adt.sequential.Stack;
 import edu.uoc.ds.adt.sequential.StackArrayImpl;
 
-public class PR1Stack {
-    public final int CAPACITY = 10;
+public class PR1Stack<T> {
+    private int CAPACITY = 10;
 
-    private Stack<Character> stack;
+    private Stack<T> stack;
 
-    public PR1Stack() {
+    public PR1Stack(int capacity) {
+        this.CAPACITY = capacity;
         newStack();
     }
 
     public void newStack() {
-        stack = new StackArrayImpl<Character>(CAPACITY);
+        stack = new StackArrayImpl<>(CAPACITY);
     }
 
-    public Stack<Character> getStack() {
-        return this.stack;
+    public Stack<T> getStack() {
+        return stack;
     }
 
-    public void push(Character c) {
-        this.stack.push(c);
+    public void push(T element) {
+        stack.push(element);
     }
 
-    public Character pop() {
-        return this.stack.pop();
+    public T pop() {
+        return stack.pop();
+    }
+
+    public T peek() {
+        return stack.peek();
+    }
+
+    public int size() {
+        return stack.size();
+    }
+
+    public boolean isEmpty() {
+        return stack.isEmpty();
     }
 }

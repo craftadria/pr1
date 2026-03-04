@@ -8,20 +8,27 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class PR1QueueTest {
-    PR1Queue pr1q;
+    PR1Queue<Point> pr1q;
 
-    private void fillQueue() {
-        for (char c = '0'; c < '9'; c++) {
-            pr1q.add(Character.valueOf(c));
-
+    private void fillQueue(Point[] points) {
+        for (Point point : points) {
+            pr1q.add(point);
         }
     }
+
     @Before
     public void setUp() {
-        this.pr1q = new PR1Queue();
+        double a = 0;
+        double b = 5;
+        double thetaMax = 10 * Math.PI;
+        double step = 0.05;
+
+        Point[] points = SpiralGenerator.generate(a, b, thetaMax, step);
+
+        this.pr1q = new PR1Queue(points.length);
 
         assertNotNull(this.pr1q.getQueue());
-        fillQueue();
+        fillQueue(points);
     }
 
     @After
@@ -29,20 +36,35 @@ public class PR1QueueTest {
         this.pr1q = null;
     }
 
-
     @org.junit.Test
     public void queueTest() {
-        assertEquals(this.pr1q.CAPACITY-1, this.pr1q.getQueue().size());
-        Assert.assertEquals(new Character('0'), pr1q.poll());
-        Assert.assertEquals(new Character('1'), pr1q.poll());
-        Assert.assertEquals(new Character('2'), pr1q.poll());
-        Assert.assertEquals(new Character('3'), pr1q.poll());
-        Assert.assertEquals(new Character('4'), pr1q.poll());
-        Assert.assertEquals(new Character('5'), pr1q.poll());
-        Assert.assertEquals(new Character('6'), pr1q.poll());
-        Assert.assertEquals(new Character('7'), pr1q.poll());
-        Assert.assertEquals(new Character('8'), pr1q.poll());
-        assertEquals(0, this.pr1q.getQueue().size());
+
+        Point point = pr1q.poll();
+        assertEquals(0, point.x(),0);
+        assertEquals(0, point.y(),0);
+
+        point = pr1q.poll();
+        assertEquals(0.24, point.x(),0.05);
+        assertEquals(0.012, point.y(),0.05);
+
+        point = pr1q.poll();
+        assertEquals(0.5, point.x(),0.05);
+        assertEquals(0.05, point.y(),0.05);
+
+        point = pr1q.poll();
+        assertEquals(0.75, point.x(),0.05);
+        assertEquals(0.11, point.y(),0.05);
+
+        point = pr1q.poll();
+        assertEquals(0.98, point.x(),0.05);
+        assertEquals(0.20, point.y(),0.05);
+
+        point = pr1q.poll();
+        assertEquals(1.21, point.x(),0.05);
+        assertEquals(0.30, point.y(),0.05);
+
+
+        assertEquals(623, this.pr1q.getQueue().size());
     }
 
 }
